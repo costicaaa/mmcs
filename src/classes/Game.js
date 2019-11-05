@@ -30,6 +30,7 @@ export default class Game {
     }
 
     getChanceBetweenTwoTeams(){
+        // console.log('t1', this.t1, 't2', this.t2);
         return this.t1.winningChance[this.t2.number];
     }
 

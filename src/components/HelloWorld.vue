@@ -43,7 +43,7 @@
                 <br>
                 <br>
                 <br>
-                <input type="submit" onclick="calcJacobian()" value="calculate" name="calculate" class="btn btn-info">
+                <button type="button" @click="calculateNormal()" class="btn btn-info">calculate</button>
             </form>
 
         </div>
@@ -128,15 +128,22 @@
                 let normalTournament = new NormalTournament(this.teams);
                 normalTournament.simulate();
 
+            },
+
+            calculateNormal(){
+                this.calculateMostProbableToWinTeam();
+                this.simulateNormalTournament();
+
+                // for(let i = 1; i <= 100; i++){
+                //
+                // }
             }
         },
 
         mounted(){
             this.generateLowerMatrixInfo();
             this.generateTeams();
-            this.calculateMostProbableToWinTeam();
 
-            this.simulateNormalTournament();
         },
 
 
