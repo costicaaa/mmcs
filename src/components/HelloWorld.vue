@@ -125,18 +125,17 @@
             },
 
             simulateNormalTournament(){ // each team plays each other 3 times
-                let normalTournament = new NormalTournament(this.teams);
+                let normalTournament = new NormalTournament(JSON.parse(JSON.stringify(this.teams)));
                 normalTournament.simulate();
 
             },
 
             calculateNormal(){
-                this.calculateMostProbableToWinTeam();
-                this.simulateNormalTournament();
+                // this.calculateMostProbableToWinTeam();
 
-                // for(let i = 1; i <= 100; i++){
-                //
-                // }
+                for(let i = 1; i <= 1000; i++){
+                    this.simulateNormalTournament();
+                }
             }
         },
 
