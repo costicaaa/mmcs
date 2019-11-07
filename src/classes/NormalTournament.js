@@ -7,17 +7,22 @@ export default class NormalTournament {
     gameNumber = 1;
     biggestNumberOfWins = 0;
 
-    winnerTeamNumber;
-    winnerTeam;
+    details;
 
-    constructor(teams) {
+    number;
+
+    constructor(teams, number) {
         this.teams = JSON.parse(JSON.stringify(teams));
+        this.number = number;
     }
 
     simulate() {
         let teams = JSON.parse(JSON.stringify(this.teams));
         this.findOtherTeamsToPlayAgainst(teams);
+
+        return this.details;
     }
+
 
     findOtherTeamsToPlayAgainst(teams) {
         // console.log('teams', teams);
@@ -45,7 +50,11 @@ export default class NormalTournament {
         }
         else
         {
-            console.log('winner of tournament = ' + winningTeams[0].number + " games = " + this.games.length);
+            this.details = {
+                number: this.number,
+                winTeamNumber: winningTeams[0].number,
+                numberOfWinsPerTeam: teamsWins
+            };
         }
 
     }

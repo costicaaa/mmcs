@@ -61,6 +61,8 @@
                     numberOfTeams: 4,
                     teams: [],
                     mostLikelyToWinTeam : null,
+                    normalTournamentNumber: 1,
+                    normalTournamentResults: [],
 
                 // probability to lose -> t1 has x % probability to lose against at2...16
                     t1: {
@@ -125,8 +127,10 @@
             },
 
             simulateNormalTournament(){ // each team plays each other 3 times
-                let normalTournament = new NormalTournament(JSON.parse(JSON.stringify(this.teams)));
-                normalTournament.simulate();
+                let normalTournament = new NormalTournament(JSON.parse(JSON.stringify(this.teams)), this.normalTournamentNumber++);
+                let details = normalTournament.simulate();
+                // this.normalTournamentResults.push(details);
+                console.log(details);
 
             },
 
