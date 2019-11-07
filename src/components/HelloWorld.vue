@@ -108,7 +108,7 @@
                 <br>
                 <br>
                 <!--                <button type="button" @click="calculateNormal()" class="btn btn-info">calculate</button>-->
-                <button type="button" @click="calculateSpecialBracket()" class="btn btn-info">calculate special
+                <button type="button" @click="calculateBoth()" class="btn btn-info">calculate special
                     bracket
                 </button>
             </form>
@@ -121,6 +121,7 @@
 <script>
     import Team from '../classes/Team'
     import NormalTournament from "../classes/NormalTournament";
+    import SpecialTournament from "../classes/SpecialTournament";
 
     export default {
         name: 'HelloWorld',
@@ -266,29 +267,84 @@
             simulateNormalTournament() { // each team plays each other 3 times
                 let normalTournament = new NormalTournament(JSON.parse(JSON.stringify(this.teams)), this.normalTournamentNumber++);
                 let details = normalTournament.simulate();
-                // this.normalTournamentResults.push(details);
+                this.normalTournamentResults.push(details);
                 console.log(details);
 
+            },
+
+            simulateSpecialTournament(){
+                let specialTournament = new SpecialTournament(JSON.parse(JSON.stringify(this.teams)), this.specialTournamentNumber++);
+                let details = specialTournament.simulate();
             },
 
             calculateSpecialBracket() { // each team plays each other 3 times
-                let specialTournament = new NormalTournament(JSON.parse(JSON.stringify(this.teams)), this.specialTournamentNumber++);
+                let specialTournament = new SpecialTournament(JSON.parse(JSON.stringify(this.teams)), this.specialTournamentNumber++);
                 let details = specialTournament.simulate();
-                // this.normalTournamentResults.push(details);
+                this.specialTournamentResults.push(details);
                 console.log(details);
-
             },
 
-            calculateNormal() {
-                // this.calculateMostProbableToWinTeam();
+            calculateBoth() {
+                this.calculateMostProbableToWinTeam();
 
-                for (let i = 1; i <= 1000; i++)
+                for (let i = 1; i <= 100; i++)
                 {
                     this.simulateNormalTournament();
+                    this.calculateSpecialBracket();
                 }
+                console.log(this.mostLikelyToWinTeam.number);
+
+                console.log('most won normals( ' +  this.normalTournamentResults.length + ' games )', this.getBiggestNumberOfWins(this.normalTournamentResults));
+                console.log('most won specials( ' +  this.specialTournamentResults.length + ' games )', this.getBiggestNumberOfWins(this.specialTournamentResults));
+            },
+
+            getEachTeamNumberOfWins(tournaments) {
+                let objj = {};
+                for (let team of this.teams)
+                {
+                    let gamesWon = tournaments.filter(item => item.winTeamNumber === team.number);
+                    objj[team.number] = gamesWon.length;
+                }
+                return objj;
+            },
+
+            getBiggestNumberOfWins(tournaments) {
+                let teamWins = this.getEachTeamNumberOfWins(tournaments);
+                // { teamNumber : numberOfWins }
+                let numbersOfWins = Object.values(teamWins);
+
+                let maxNWins = this.arrayMax(numbersOfWins);
+                return this.getWinningTeam(teamWins, maxNWins);
+            },
+
+            getWinningTeam(teamsWins, maxNWins) {
+                let winningTeams = [];
+                for (let teamNumber of Object.keys(teamsWins))
+                {
+                    if (teamsWins[teamNumber] === maxNWins)
+                    {
+                        winningTeams.push(this.teams.find(item => item.number === parseInt(teamNumber)));
+                    }
+                }
+                return winningTeams[0].number;
+            },
+
+            arrayMax(arr) {
+                return arr.reduce(function (p, v) {
+                    return (p > v ? p : v);
+                });
             }
+
         },
 
+        computed: {
+            teamThatWonMostNormals(){
+
+            },
+            teamThatWonMostSpecials(){
+
+            }
+        },
         mounted() {
             this.generateLowerMatrixInfo();
             this.generateTeams();

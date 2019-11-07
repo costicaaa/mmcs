@@ -44,7 +44,7 @@ export default class NormalTournament {
         // console.log('maxNumberOfWins', maxNumberOfWins);
         let winningTeams = this.getTeamsWithBiggestNumberOfWins(teamsWins, maxNumberOfWins);
 
-        if(winningTeams.length > 1)
+        if (winningTeams.length > 1)
         {
             this.findOtherTeamsToPlayAgainst(winningTeams);
         }
@@ -59,26 +59,28 @@ export default class NormalTournament {
 
     }
 
-    getEachTeamNumberOfWins(){
+    getEachTeamNumberOfWins() {
         let objj = {};
-        for(let team of this.teams){
+        for (let team of this.teams)
+        {
             let gamesWon = this.games.filter(item => item.winnerNumber === team.number);
             objj[team.number] = gamesWon.length;
         }
         return objj;
     }
 
-    getBiggestNumberOfWins(teamsWins){
+    getBiggestNumberOfWins(teamsWins) {
         // { teamNumber : numberOfWins }
         let numbersOfWins = Object.values(teamsWins);
 
         return this.arrayMax(numbersOfWins);
     }
 
-    getTeamsWithBiggestNumberOfWins(teamsWins, maxNWins){
+    getTeamsWithBiggestNumberOfWins(teamsWins, maxNWins) {
         let winningTeams = [];
-        for(let teamNumber of Object.keys(teamsWins)){
-            if(teamsWins[teamNumber] === maxNWins)
+        for (let teamNumber of Object.keys(teamsWins))
+        {
+            if (teamsWins[teamNumber] === maxNWins)
             {
                 winningTeams.push(this.teams.find(item => item.number === parseInt(teamNumber)));
             }
@@ -87,13 +89,11 @@ export default class NormalTournament {
     }
 
 
-
-     arrayMax(arr) {
+    arrayMax(arr) {
         return arr.reduce(function (p, v) {
-            return ( p > v ? p : v );
+            return (p > v ? p : v);
         });
     }
-
 
 
 }

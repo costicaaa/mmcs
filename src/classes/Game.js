@@ -13,15 +13,21 @@ export default class Game {
 
     simulate(){
         let winner;
+        let loser;
         if(Math.random() < this.getChanceBetweenTwoTeams()){
             winner = this.t1;
+            loser = this.t2;
         }
         else
         {
             winner = this.t2;
+            loser = this.t1;
         }
         this.winner = winner;
         this.winnerNumber = winner.number,
+
+            this.loser = loser;
+        this.loserNumber = loser.number,
         this.details = {
             'text': this.t1.name + ' win change against ' + this.t2.name + ' = ' + this.getChanceBetweenTwoTeams() + ' winner = ' + winner.name,
             't1' : this.t1,
