@@ -1,4 +1,4 @@
-let numberOfTeams = 4;
+let numberOfTeams = 8;
 
 export default class Team {
     number;
